@@ -1,2 +1,5 @@
 ifconfig eth0 5.5.6.3 netmask 255.255.255.0 up
 route add default gw 5.5.6.8 dev eth0
+
+# Ajouter le DNS de google 
+echo "nameserver 8.8.8.8" | tee -a /etc/resolv.conf
