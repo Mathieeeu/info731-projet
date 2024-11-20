@@ -1,0 +1,11 @@
+#!/bin/bash
+OLD=http://snapshot.debian.org/archive/debian/20110101T031503Z
+PAF=$OLD/pool/main/
+wget $PAF/libt/libtasn1-3/libtasn1-3_2.7-1_i386.deb
+wget $PAF/libg/libgpg-error/libgpg-error0_1.6-1_i386.deb
+wget $PAF/libg/libgcrypt11/libgcrypt11_1.4.5-2_i386.deb
+wget $PAF/g/gnutls26/libgnutls26_2.8.6-1_i386.deb
+wget $PAF/libi/libidn/libidn11_1.18-1_i386.deb
+wget $PAF/s/shishi/shishi-common_1.0.0-1_all.deb
+wget $PAF/s/shishi/libshishi0_1.0.0-1_i386.deb
+wget $PAF/i/inetutils/inetutils-telnetd_1.6-3_i386.deb

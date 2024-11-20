@@ -6,8 +6,9 @@ RUN apt upgrade -y
 
 RUN apt install -y \
 	openbsd-inetd \
-	telnetd
+	telnetd \
+	python3-pip
 
-RUN apt-get install python3-pip -y
+RUN python3 -m pip install --no-cache-dir --break-system-packages requests
 
 RUN useradd -m -p $(perl -e 'print crypt($ARGV[0], "password")' 'telnet') telnet
