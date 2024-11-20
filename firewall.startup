@@ -3,3 +3,23 @@ ifconfig eth1 1.2.2.1 netmask 255.255.255.0 up
 ifconfig eth2 1.2.3.1 netmask 255.255.255.0 up
 ifconfig eth3 5.5.5.1 netmask 255.255.255.0 up
 ifconfig eth4 5.5.6.8 netmask 255.255.255.0 up
+
+# Ajouter le DNS de google 
+echo "nameserver 8.8.8.8" | tee -a /etc/resolv.conf
+
+# Configuration du pare-feu
+cd scripts
+chmod +x block_sites.sh
+./block_sites.sh
+chmod 000 block_sites.sh
+cd ..
+
+# Activer le forwarding IP
+echo 1 > /proc/sys/net/ipv4/ip_forward
+
+# Ajouter les règles NAT
+iptables -t nat -A POSTROUTING -o eth5 -j MASQUERADE
+
+# Permettre le trafic de retour
+iptables -A FORWARD -i eth5 -o eth0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+iptables -A FORWARD -i eth0 -o eth5 -j ACCEPT
