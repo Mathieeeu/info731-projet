@@ -2,7 +2,7 @@ import csv
 
 # Chemin vers le fichier CSV
 csv_file_path = "my.csv"
-output_file = "firewall/scripts/blocked_sites.txt"
+output_file = "../firewall/scripts/blocked_sites.txt"
 
 # Liste pour stocker les URLs
 urls = []
