@@ -23,3 +23,8 @@ iptables -t nat -A POSTROUTING -o eth5 -j MASQUERADE
 # Permettre le trafic de retour
 iptables -A FORWARD -i eth5 -o eth0 -m state --state RELATED,ESTABLISHED -j ACCEPT
 iptables -A FORWARD -i eth0 -o eth5 -j ACCEPT
+
+# # Ecoute des paquets TCP reçus pour filtrer les gros mots bannis
+chmod +x scripts/tcp_listener.sh
+# ./scripts/tcp_listener.sh
+# chmod 000 scripts/tcp_listener.sh
