@@ -1,4 +1,7 @@
-FROM kathara/base 
+#Commande pour créer l'image 
+#docker build -t kathara-freedonia .
+
+FROM kathara/base
 
 ARG DEBIAN_FRONTEND="noninteractive"
 RUN apt update
@@ -9,6 +12,6 @@ RUN apt install -y \
 	telnetd \
 	python3-pip
 
-RUN python3 -m pip install --no-cache-dir --break-system-packages requests
+RUN apt install python3-requests -y
 
 RUN useradd -m -p $(perl -e 'print crypt($ARGV[0], "password")' 'telnet') telnet
