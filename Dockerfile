@@ -1,4 +1,4 @@
-#Commande pour créer l'image 
+#Commande pour créer l'image (il faut se placer dans le repertoire)
 #docker build -t kathara-freedonia .
 
 FROM kathara/base
