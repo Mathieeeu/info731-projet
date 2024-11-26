@@ -102,7 +102,7 @@ def isAllowed(data,address):
     BAN_WORDS = []
     BYPASS_IPS = []
 
-    with open("scripts/swearWords.csv", "r") as file:
+    with open("scripts/swear_words.csv", "r") as file:
         reader = csv.reader(file)
         for row in reader:
             BAN_WORDS.append(row[0])
