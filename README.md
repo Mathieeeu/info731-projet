@@ -57,7 +57,7 @@ Le proxy est un serveur qui agit comme un intermédiaire entre les clients et le
 Les mots-clés sensibles doivent être ajoutés au fichier `/scripts/swear_words.csv`, une requête est immédiatement interceptée si elle contient un mot-clé de cette liste.
 
 > [!TIP]
-> Le proxy peut aussi être utilisé pour cacher l'adresse IP des clients !
+> Le proxy peut aussi être utilisé pour cacher l'adresse IP des clients ! ☝️🤓
 
 ## Prérequis
 
