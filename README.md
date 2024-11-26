@@ -52,9 +52,12 @@ Les adresses IP privilégiées doivent être ajoutées au fichier `/scripts/allo
 
 ## Fonctionnement du proxy
 
-Le proxy est un serveur qui agit comme un intermédiaire entre les clients et les serveurs. Il filtre les requêtes des clients et les redirige vers les serveurs. Il peut aussi être utilisé pour cacher l'adresse IP des clients. Le proxy est configuré pour bloquer les requêtes contenant des mots-clés sensibles.
+Le proxy est un serveur qui agit comme un intermédiaire entre les clients et les serveurs. Chaque requête HTTP est interceptée par le proxy, qui envoie ensuite lui-même la requête au serveur, puis renvoie la réponse au client si elle est autorisée. Toute requête contenant des mots-clés sensibles sera bloquée et son auteur se verra convoqué par les autorités compétentes _afin d'échanger sur ses perspectives d'avenir_... :wink: 
 
 Les mots-clés sensibles doivent être ajoutés au fichier `/scripts/swear_words.csv`, une requête est immédiatement interceptée si elle contient un mot-clé de cette liste.
+
+> [!TIP]
+> Le proxy peut aussi être utilisé pour cacher l'adresse IP des clients !
 
 ## Prérequis
 
