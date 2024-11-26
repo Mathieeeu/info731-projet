@@ -109,4 +109,5 @@ kathara lclean # à exécuter dans le répertoire du projet
 ---
 
 © 2024 - INFO731 - Tous droits réservés - Propriété du gouvernement de Freedonia.
+
 Pour plus d'informations, veuillez consulter les [conditions générales d'utilisation](#).
