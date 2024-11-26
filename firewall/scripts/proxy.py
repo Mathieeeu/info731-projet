@@ -2,6 +2,7 @@
 
 import socket
 import threading
+import csv
 
 def handle_client_request(client_socket, addr):
     try:
@@ -57,14 +58,11 @@ def handle_client_request(client_socket, addr):
                     else:
                         body = b"<h1>403 Forbidden</h1>\r\n"
                         response = b"HTTP/1.1 403 Forbidden\r\nContent-Length: " + str(len(body)).encode() + b"\r\n\r\n" + body + b"\r\n"
-                        IS_LEGAL = False
                         print("\033[91m[*] Blocked content detected - sending response to client\033[0m")
                         break
 
                 except socket.timeout:
-                    break
-            if IS_LEGAL:
-                print("\033[92m[*] Legal content detected - sending response to client\033[0m")
+                    break                
             # Envoyer la réponse au client
             client_socket.sendall(response)
 
@@ -101,18 +99,49 @@ def extract_host_port_from_request(request):
 
 def isAllowed(data,address):
     # Vérifier si le contenu est autorisé
-    BAN_WORDS = ["jinx", "bonheur", "danger", "moved"]
-    BYPASS_IPS = ["5.5.6.3","5.5.5.2"]
+    BAN_WORDS = []
+    BYPASS_IPS = []
+
+    with open("scripts/swearWords.csv", "r") as file:
+        reader = csv.reader(file)
+        for row in reader:
+            BAN_WORDS.append(row[0])
+        
+    with open("scripts/allowed_ips.txt", "r") as file:
+        for line in file:
+            BYPASS_IPS.append(line.strip())
 
     if address in BYPASS_IPS: 
         print(f"\033[94m[*] Bypassing firewall for IP: {address}\033[0m")
         return True
     
+    # Vérifier toutes les formes d'un mot interdit (avec espaces avant et après, avec point après, pluriel, etc.)
     for word in BAN_WORDS:
-        if word.encode() in data:
+        if (" " + word + " ") in data.decode("utf-8").lower():
             print(f"\033[93m[*] Blocked content: word:{word} <---------\033[0m")
+            # print(f"\033[93m[*] Blocked content: word:{word} in : {data}\033[0m")
             return False
-        
+        if (" " + word + ".") in data.decode("utf-8").lower():
+            print(f"\033[93m[*] Blocked content: word:{word} <---------\033[0m")
+            # print(f"\033[93m[*] Blocked content: word:{word} in : {data}\033[0m")
+            return False
+        if (" " + word + "s ") in data.decode("utf-8").lower():
+            print(f"\033[93m[*] Blocked content: word:{word} <---------\033[0m")
+            # print(f"\033[93m[*] Blocked content: word:{word} in : {data}\033[0m")
+            return False
+        if (" " + word + "es ") in data.decode("utf-8").lower():
+            print(f"\033[93m[*] Blocked content: word:{word} <---------\033[0m")
+            # print(f"\033[93m[*] Blocked content: word:{word} in : {data}\033[0m")
+            return False
+        if (" " + word + "s.") in data.decode("utf-8").lower():
+            print(f"\033[93m[*] Blocked content: word:{word} <---------\033[0m")
+            # print(f"\033[93m[*] Blocked content: word:{word} in : {data}\033[0m")
+            return False
+        if (" " + word + "es.") in data.decode("utf-8").lower():
+            print(f"\033[93m[*] Blocked content: word:{word} <---------\033[0m")
+            # print(f"\033[93m[*] Blocked content: word:{word} in : {data}\033[0m")
+            return False
+    print("\033[92m[*] Legal content detected - sending response to client\033[0m")
     return True
 
 # Configuration du proxy
@@ -141,3 +170,4 @@ while True:
 # Pour tester le proxy, vous pouvez utiliser curl avec un proxy spécifié:
 # curl --proxy <adresse_firewall>:8888 httpbin.org/ip   (on spécifie le proxy, on peut aussi mettre -x à la place de --proxy)
 # curl httpbin.org/ip     (devrait marcher aussi)
+
