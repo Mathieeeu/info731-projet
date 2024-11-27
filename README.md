@@ -70,10 +70,6 @@ Les mots-clés sensibles doivent être ajoutés au fichier `/scripts/swear_words
 
 - [Kathara](https://www.kathara.org/)
 
-```bash
-docker pull kathara/base
-```
-
 - Création de l'image Docker `kathara-freedonia` spécifique à ce projet (à partir du Dockerfile) :
 
 ```bash
