@@ -20,6 +20,7 @@ Le réseau de machines Linux Docker/Kathara est organisé de la manière suivant
     - **PC3**
     - **Premier_Ministre** 
     - **Banque_Centrale**
+3. **Serveur SQL** : Stocke l'ensemble des requêtes provenant du réseau Freedonien.
 
 ### Firewall et proxy
 
@@ -36,9 +37,9 @@ Le **firewall** est la passerelle principale entre le réseau interne et Interne
     +---+----+
         |
         |
-+---+---+---+---+---+---+---+---+---+
-|       |       |       |           |
-PC1     PC2     PC3     Ministre*   Banque_Centrale*
++---+---+---+---+---+---+---+---+---+---+---+---+---+---+
+|       |       |       |           |                   |
+PC1     PC2     PC3     Ministre*   Banque_Centrale*    Serveur SQL
                         (*:Bypass Proxy)
 ```
 
@@ -59,13 +60,15 @@ Les mots-clés sensibles doivent être ajoutés au fichier `/scripts/swear_words
 > [!TIP]
 > Le proxy peut aussi être utilisé pour cacher l'adresse IP des clients ! ☝️🤓
 
+## Structure de la base de données
+
+<!-- TODO -->
+
 ## Prérequis
 
 - [Docker](https://docs.docker.com/get-docker/)
 
 - [Kathara](https://www.kathara.org/)
-
-- Installation de l'image Docker `kathara/base` :
 
 ```bash
 docker pull kathara/base
@@ -100,6 +103,14 @@ curl httpbin.org # Par exemple
 ```
 
 Si la requête est autorisée, la réponse sera affichée. Sinon, un message d'erreur 403 (Forbidden) sera retourné.
+
+## Affichage du contenu de la base de données :
+
+- Dans le terminal du firewall, executer le script python suivant :
+
+```bash
+python3 /scripts/database.py
+```
 
 ## Arrêt du réseau
 
