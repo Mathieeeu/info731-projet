@@ -1,0 +1,9 @@
+ifconfig eth0 5.6.1.2 netmask 255.255.255.0 up
+route add default gw 5.6.1.1 dev eth0
+
+# Manière un peu tricky de rendre MariaDB accessible sur le réseau, ne pas utiliser en production
+sed -i 's/127.0.0.1/5.6.1.2/g' /etc/mysql/mariadb.conf.d/50-server.cnf
+
+/etc/init.d/mysql start
+source /scripts/populate_db.sh
+chmod 000 /scripts/populate_db.sh
