@@ -13,6 +13,7 @@ RUN apt install -y \
 	openbsd-inetd \
 	telnetd \
 	python3-pip \
-	python3-mysqldb
+	python3-mysqldb \
+	python3-prettytable
 
 RUN useradd -m -p $(perl -e 'print crypt($ARGV[0], "password")' 'telnet') telnet

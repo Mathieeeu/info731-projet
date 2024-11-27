@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS http_requests (
     id INT AUTO_INCREMENT PRIMARY KEY,
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     source_ip VARCHAR(45),
-    curl_content TEXT,
+    host TEXT,
     allowed BOOLEAN
 );"
 
@@ -20,13 +20,13 @@ mysql -u root -p -e "GRANT ALL PRIVILEGES ON firewall_logs.* TO 'root' IDENTIFIE
 mysql -u root -ppassword -e "SELECT 1;"
 
 
-# Insersion de données dans la table 'http_requests'
-# Variables pour l'insertion
-SOURCE_IP="192.168.1.1"
-CURL_CONTENT="http://example.com"
-ALLOWED=true
+# # Insersion de données dans la table 'http_requests'
+# # Variables pour l'insertion
+# SOURCE_IP="192.168.1.1"
+# HOST="http://example.com"
+# ALLOWED=true
 
-# Insérer une nouvelle requête HTTP dans la table
-mysql -u root -ppassword -D firewall_logs -e "
-INSERT INTO http_requests (source_ip, curl_content, allowed)
-VALUES ('$SOURCE_IP', '$CURL_CONTENT', $ALLOWED);"
+# # Insérer une nouvelle requête HTTP dans la table
+# mysql -u root -ppassword -D firewall_logs -e "
+# INSERT INTO http_requests (source_ip, host, allowed)
+# VALUES ('$SOURCE_IP', '$HOST', $ALLOWED);"

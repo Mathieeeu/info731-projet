@@ -1,4 +1,5 @@
 import MySQLdb
+from prettytable import PrettyTable
 
 def fetch_firewall_logs():
     try:
@@ -17,13 +18,14 @@ def fetch_firewall_logs():
         rows = cursor.fetchall()
         print("Total number of rows in http_requests: ", cursor.rowcount)
 
-        print("\nFetching each row")
+        # Utiliser PrettyTable pour afficher les résultats en tableau
+        table = PrettyTable()
+        table.field_names = ["ID", "Timestamp", "Source IP", "Host", "Allowed"]
+
         for row in rows:
-            print("ID =", row[0])
-            print("Timestamp =", row[1])
-            print("Source IP =", row[2])
-            print("Curl Content =", row[3])
-            print("Allowed =", row[4], "\n")
+            table.add_row(row)
+        
+        print(table)
 
     except MySQLdb.Error as e:
         print("Error while connecting to MySQL", e)

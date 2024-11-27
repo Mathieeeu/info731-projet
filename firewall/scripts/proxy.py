@@ -3,6 +3,7 @@
 import socket
 import threading
 import csv
+import MySQLdb
 
 def handle_client_request(client_socket, addr):
     try:
@@ -41,7 +42,7 @@ def handle_client_request(client_socket, addr):
             print("[*] Response received from server")
             response = b''
             CHUNK_SIZE = 1024
-            IS_LEGAL = True
+            IS_ALLOWED = True
             while True:
                 try:
                     data = destination_socket.recv(CHUNK_SIZE)
@@ -59,12 +60,14 @@ def handle_client_request(client_socket, addr):
                         body = b"<h1>403 Forbidden</h1>\r\n"
                         response = b"HTTP/1.1 403 Forbidden\r\nContent-Length: " + str(len(body)).encode() + b"\r\n\r\n" + body + b"\r\n"
                         print("\033[91m[*] Blocked content detected - sending response to client\033[0m")
+                        IS_ALLOWED = False
                         break
 
                 except socket.timeout:
                     break                
             # Envoyer la réponse au client
             client_socket.sendall(response)
+            add_to_database(addr[0], host, IS_ALLOWED)
 
     except Exception as e:
         print(f"\033[91m[*][*] Exception: {e}\033[0m")
@@ -143,6 +146,32 @@ def isAllowed(data,address):
             return False
     print("\033[92m[*] Legal content detected - sending response to client\033[0m")
     return True
+
+def add_to_database(source_ip, host, allowed):
+    # Ajouter la requete à la base de données
+    try:
+        # Connexion à la base de données
+        connection = MySQLdb.connect(
+            host='5.6.1.2',
+            user='root',
+            passwd='password',
+            db='firewall_logs'
+        )
+
+        cursor = connection.cursor()
+        cursor.execute("USE firewall_logs")
+        cursor.execute("INSERT INTO http_requests (source_ip, host, allowed) VALUES (%s, %s, %s)", (source_ip, host, allowed))
+        connection.commit()
+        print("\033[92m[*] Request added to database\033[0m")
+
+    except MySQLdb.Error as e:
+        print("Error while connecting to MySQL", e)
+
+    finally:
+        if connection:
+            cursor.close()
+            connection.close()
+            print("MySQL connection is closed")
 
 # Configuration du proxy
 PROXY_HOST = "0.0.0.0"
