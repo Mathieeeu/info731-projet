@@ -42,7 +42,7 @@ PC1     PC2     PC3     Ministre*   Banque_Centrale*
                         (*:Bypass Proxy)
 ```
 
-Le **Firewall** est le nœud central de la sécurité du réseau. Il assure que toutes les communications passent par son filtre de proxy, excepté pour les machines sans restriction, comme **Premier_Ministre** et **Banque_Centrale**.
+Le **Firewall** est le nœud central de la sécurité du réseau. Il assure que toutes les communications soient filtrées par le proxy, excepté pour les machines sans restriction, comme **Premier_Ministre** et **Banque_Centrale**.
 
 ## Fonctionnement du Firewall
 
